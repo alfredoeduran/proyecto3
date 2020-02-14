@@ -1,6 +1,6 @@
 var vp = document.getElementById("villaplatzi"); //asi se traen elementos de html
 var papel = vp.getContext("2d"); //Para contextualizar el tipo de canvas
-
+document.addEventListener("keydown", dibujarporqui);
 
 //json para carga de imagenes
 var fondo = {
@@ -16,10 +16,18 @@ var pollo = {
     cargaOK: false
 }
 
+var cerdo = {
+  url: "cerdo.png",
+  cargaOK: false
+}
+
+
+
 //variables creadas para introducir la cantidad de iteraciones
 
 var cantidadp = aleatorio(2,15);
 var cantidad = aleatorio(1,10);
+var cantidadc = aleatorio(1,10);
 
 //Funcion para montar en la instancia de carga las imagenes
 
@@ -34,6 +42,10 @@ vaca.imagen.addEventListener("load", cargarVacas);
 pollo.imagen = new Image();
 pollo.imagen.src = pollo.url;
 pollo.imagen.addEventListener("load", cargarPollos);
+
+cerdo.imagen = new Image();
+cerdo.imagen.src = cerdo.url;
+cerdo.imagen.addEventListener("load", cargarCerdos);
 
 //funcion para introducir las imagenes en el canvas
 
@@ -66,7 +78,7 @@ function dibujar()
     {
         papel.drawImage(fondo.imagen, 0,0);    
     }
-    if(vaca.cargaOK)
+    if(vaca.cargaOK)  //carga de vacas
     {      
         
         console.log(cantidad);
@@ -80,7 +92,7 @@ function dibujar()
        
         }
     }
-    if(pollo.cargaOK)
+    if(pollo.cargaOK)  //carga de pollos
     {      
         
         console.log(cantidadp);
@@ -94,7 +106,13 @@ function dibujar()
        
         }
     }
-}
+    if(cerdo.cargaOK)
+    {
+
+      papel.drawImage(cerdo.imagen, xcerdo, ycerdo); 
+      }
+    }
+
 
 //funcion para plasmar numeros aleatorios
 function aleatorio(min, maxi)
@@ -112,3 +130,45 @@ fondo.src = mapa;
 fondo.addEventListener("load", dibujar);
 
 */
+
+var teclas = {
+  UP: 38,
+  DOWN: 40,
+  LEFT: 37,
+  RIGHT: 39
+};
+
+var ycerdo = 210;
+var xcerdo = 210;
+
+function dibujarporqui(evento)
+{
+  var colorcito = "blue";
+  var movimiento = 5;
+  console.log(evento);
+
+  switch(evento.keyCode)
+  {
+    case teclas.UP:
+      dibujarporqui(colorcito, xcerdo, ycerdo, xcerdo, ycerdo - movimiento, papel);
+      ycerdo = ycerdo - movimiento;
+    break;
+
+    case teclas.DOWN:
+      dibujarporqui(colorcito, xcerdo, ycerdo, xcerdo, ycerdo + movimiento, papel);
+      ycerdo = ycerdo + movimiento;
+    break;
+
+    case teclas.LEFT:
+      dibujarporqui(colorcito, xcerdo, ycerdo, xcerdo - movimiento, ycerdo, papel);
+      xcerdo = xcerdo - movimiento;
+    break;
+
+    case teclas.RIGHT:
+      dibujarporqui(colorcito, xcerdo, ycerdo, xcerdo + movimiento, ycerdo, papel);
+      xcerdo = xcerdo + movimiento;
+    break;
+    
+    
+  }
+}
